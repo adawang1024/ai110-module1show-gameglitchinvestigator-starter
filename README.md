@@ -67,17 +67,22 @@ Describe your fixed game in numbered steps so a reader can follow along without 
 ## 🧪 Test Results
 
 ```
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
-```
-============================== test session starts ==============================
+$ python -m pytest -v
+============================= test session starts =============================
 platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0
 rootdir: C:\Users\HUAWEI\ai110-module1show-gameglitchinvestigator-starter
 plugins: anyio-4.9.0
-collected 7 items                                                                
+collected 8 items
 
-tests\test_bug_fixes.py ....                                               [ 57%]
-tests\test_game_logic.py ...                                               [100%]
+tests/test_game_logic.py::test_winning_guess PASSED                      [ 12%]
+tests/test_game_logic.py::test_guess_too_high PASSED                     [ 25%]
+tests/test_game_logic.py::test_guess_too_low PASSED                      [ 37%]
+tests/test_game_logic.py::test_hint_direction_at_extremes PASSED         [ 50%]
+tests/test_game_logic.py::test_non_numeric_input_is_rejected PASSED      [ 62%]
+tests/test_game_logic.py::test_empty_input_is_rejected PASSED            [ 75%]
+tests/test_game_logic.py::test_valid_number_is_parsed PASSED             [ 87%]
+tests/test_game_logic.py::test_difficulty_ranges PASSED                  [100%]
 
-=============================== 7 passed in 0.02s ===============================
+============================== 8 passed in 0.02s ==============================
+```
 
