@@ -25,9 +25,24 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+**Game purpose:** A number-guessing game where the player tries to guess a secret number within a limited number of attempts. After each guess the game gives a "Go Higher" or "Go Lower" hint. Different difficulty levels change the number range and attempt limit. The twist: the original AI-generated code shipped with several bugs that made it unplayable.
+
+**Bugs found:**
+- **Backwards hints** — `check_guess` had the comparison branches flipped, so guessing too low told you to go lower and vice versa.
+- **Attempts off by one** — `st.session_state.attempts` was initialized to `1` instead of `0`, so the "Attempts left" counter started one short.
+- **New Game didn't reset properly** — clicking "New Game" only reset `attempts` and `secret`; it left `history`, `score`, and `status` (the "Game over" box) from the previous game.
+- **History only updated after a second interaction** — the Debug Info panel was rendered before the submit handler ran, so the new guess didn't appear until a later rerun.
+- **Non-numeric input burned an attempt** — `attempts` was incremented before input was validated, so typing `abc` still used up a guess.
+- **Easy difficulty had fewer attempts than Normal** — `attempt_limit_map` gave Easy 6 and Normal 8, which is backwards.
+
+**Fixes applied:**
+- Refactored `get_range_for_difficulty`, `parse_guess`, `check_guess`, and `update_score` out of `app.py` into `logic_utils.py` so they can be unit-tested without Streamlit.
+- Fixed the comparison branches in `check_guess` (`guess > secret` → `"Too High"`, else `"Too Low"`); separated hint text into a `HINT_MESSAGES` dict in `app.py`.
+- Changed `st.session_state.attempts` init from `1` to `0`.
+- Extended the "New Game" block to also reset `history`, `score`, and `status`, and to use the difficulty range instead of hardcoded `1, 100`.
+- Added `st.rerun()` at the end of the submit handler so the history panel redraws immediately; persisted hint/outcome messages in a `session_state.flash` queue so they survive the rerun.
+- Numbered the history list from 1 using `enumerate(start=1)`.
+- Added `tests/test_bug_fixes.py` with regression tests for hint direction, parse errors, and difficulty ranges.
 
 ## 📸 Demo Walkthrough
 

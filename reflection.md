@@ -63,12 +63,17 @@ claude
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+  - Every button click restarts the entire script from line 1, so normal Python variables reset to nothing. `st.session_state` is a sticky notepad that survives each restart — that's why the guess history and attempt counter live there instead of in plain variables. Without it, every click would wipe the board clean.
 
 ---
 
 ## 5. Looking ahead: your developer habits
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
-  - This could be a testing habit, a prompting strategy, or a way you used Git.
+  - Write a regression test right after fixing a bug. It took one line — `assert check_guess(60, 50) == "Too High"` — to lock in the hint fix so it can never quietly break again.
+
 - What is one thing you would do differently next time you work with AI on a coding task?
+  - Test every AI suggestion with one concrete breaking example before accepting it. `check_guess(9, "55")` immediately exposed that the "safe" fallback was actually wrong — I should have tried that the moment the AI added it.
+
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+  - I used to think buggy AI code would be obviously broken. Now I know the dangerous kind runs fine, looks reasonable, and gives wrong answers — so I treat every AI suggestion as a draft that needs a real test, not a finished solution.
