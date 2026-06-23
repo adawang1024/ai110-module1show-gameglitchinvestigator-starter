@@ -33,22 +33,36 @@ It wrote the code, ran away, and now the game is unplayable.
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. User opens the app on Normal difficulty (range 1–100, 8 attempts allowed). A
+  new secret number is picked.
+2. User guesses **40** → hint shows "📈 Go HIGHER!" and History immediately
+  updates to show "1. 40".
+3. User guesses **70** → hint shows "📉 Go LOWER!" and History updates to "1. 40
+   2. 70". Score adjusts after each guess.
+4. User guesses **55** → hint shows "📈 Go HIGHER!". Attempts left counts down
+  correctly with each submission.
+5. User guesses **62** → 🎉 Correct! Balloons appear, score is displayed, and
+  the game sets status to "won".
+6. User clicks "New Game 🔁" → board fully resets: History clears, attempts
+  return to 8, and a fresh secret is picked.
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
+ ![Game screenshot](screenshot.png)
 
 ## 🧪 Test Results
 
 ```
-# Paste your pytest output here, e.g.:
 # pytest tests/
 # ========================= X passed in 0.XXs =========================
 ```
+============================== test session starts ==============================
+platform win32 -- Python 3.11.9, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\Users\HUAWEI\ai110-module1show-gameglitchinvestigator-starter
+plugins: anyio-4.9.0
+collected 7 items                                                                
 
-## 🚀 Stretch Features
+tests\test_bug_fixes.py ....                                               [ 57%]
+tests\test_game_logic.py ...                                               [100%]
 
-- [ ] [If you choose to complete Challenge 4, describe the Enhanced UI changes here — a screenshot is optional]
+=============================== 7 passed in 0.02s ===============================
+
